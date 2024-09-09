@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Handjet&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>IECSE</title>
+</head>
+<body>
+    <h1 class="heading">IECSE</h1>
+    <h2>BRICK BREAKER</h2>
+    <button id="rules-btn" class="btn rules-btn">Show Rules</button>
+    <div id="rules" class="rules">
+        <h2>How to Play:</h2>
+        <p>Use your right and left keys to move the paddle to bounce the ball up and break the blocks.</p>
+        <p>If you miss the ball, your score and the blocks will reset.</p>
+        <button id="close-btn" class="btn">Close</button>
+    </div>
+    <div class="game-wrapper">
+        <div class="main"></div>
+        <div id="start" class="start">
+            <button class="start-btn" onclick="startGame()">Start Game</button>
+        </div>
+        <div id="difficulty" class="difficulty">
+            <p>Choose Difficulty level</p>
+            <button class="diff-btn" onclick="easyMode()">Easy</button>
+            <button class="diff-btn" onclick="mediumMode()">Medium</button>
+            <button class="diff-btn" onclick="hardMode()">Hard</button>
+        </div>
+        <div class="special-message" id="brick-1-message">Brick 1 message!</div>
+        <div class="special-message" id="brick-2-message">Brick 2 message!</div>
+        <div class="special-message" id="brick-3-message">Brick 3 message!</div>
+        <div class="special-message" id="brick-4-message">Brick 4 message!</div>
+        <div class="special-message" id="brick-5-message">Brick 5 message!</div>
+        <div class="lose">
+            <h2>GAME OVER</h2>
+            <h3>Better luck next time!</h3>
+            <button class="btn" onclick="window.location.reload()">Restart</button>
+        </div>
+
+        <div class="win">
+            <h2>YOU WIN!</h2>
+            <h3>Winner winner winner</h3>
+            <button class="btn" onclick="window.location.reload()">Restart</button>
+        </div>
+    </div>
+    <canvas id="canvas" width="750" height="520"></canvas>
+    <script src="script.js"></script>
+</body>
+</html>

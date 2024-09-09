@@ -1,0 +1,195 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, black, rgb(44, 0, 116), rgb(1, 1, 86));
+    background-size: 200% 200%;
+    animation: gradient-move 10s ease infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Handjet', sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    color: #00f6ff;
+}
+
+canvas {
+    background: rgba(255, 255, 255, 0.1);
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 60px;
+    color: #00f6ff;
+}
+
+/* Buttons */
+.btn, .start-btn, .diff-btn {
+    cursor: pointer;
+    border: 0;
+    padding: 10px 20px;
+    background-color: black;
+    color: #00f6ff;
+    border-radius: 5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover, .start-btn:hover, .diff-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.rules-btn {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+.rules {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: #00f6ff;
+    min-height: 100vh;
+    width: 400px;
+    padding: 20px;
+    line-height: 1.5;
+    transform: translateX(-400px);
+    transition: transform 1s ease-in-out;
+}
+
+.rules.show {
+    transform: translateX(0);
+}
+
+.game-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.difficulty {
+    position: absolute;
+    display: none;
+    top: 280px;
+    background: black;
+    color: #00f6ff;
+    padding: 20px 50px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: center;
+    animation: pop-in 1s;
+    font-size: 20px;
+}
+
+.start {
+    position: absolute;
+    top: 320px;
+    background: black;
+    color: #00f6ff;
+    padding: 20px 50px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: center;
+    animation: pop-in 1s;
+    width: 350px;
+    height: 75px;
+}
+
+.lose, .win {
+    display: none;
+    position: absolute;
+    top: 250px;
+    background: rgba(0, 159, 221, 0.8);
+    color: #00f6ff;
+    padding: 20px 50px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: center;
+    animation: slide-in 0.8s ease-out;
+}
+
+@keyframes pop-in {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes gradient-move {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes slide-in {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+.popup-box {
+    position: absolute;
+    left: 10px; 
+    bottom: 10px; 
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+.message {
+    display: none;
+    position: absolute;
+    top: 250px;
+    background: #39FF14;
+    color: black;
+    padding: 20px 50px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+    animation: pop-in 1s;
+}
+.special-message {
+    display: none;
+    position: fixed; /* Use fixed to ensure it stays in view */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 255, 0, 0.8); /* Neon green background */
+    color: #00ff00; /* Neon green text */
+    font-family: 'Handjet', cursive; /* Your desired font */
+    font-size: 24px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 1000;
+    max-width: 90%; /* Ensure it fits on different screen sizes */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Add some shadow for better visibility */
+}
+
+.special-message.active {
+    display: block;
+}
