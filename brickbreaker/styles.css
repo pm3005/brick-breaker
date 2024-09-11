@@ -1,9 +1,15 @@
 * {
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.handjet-font {
+    font-family: 'Handjet', sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, black, rgb(44, 0, 116), rgb(1, 1, 86));
+    background: linear-gradient(135deg, rgb(59, 0, 149), rgb(0, 0, 0), rgb(51, 0, 169));
     background-size: 200% 200%;
     animation: gradient-move 10s ease infinite;
     display: flex;
@@ -11,8 +17,9 @@ body {
     align-items: center;
     justify-content: center;
     font-family: 'Handjet', sans-serif;
+
     min-height: 100vh;
-    margin: 0;
+    width: 100%;
     color: #00f6ff;
 }
 
@@ -20,16 +27,18 @@ canvas {
     background: rgba(255, 255, 255, 0.1);
     display: block;
     border-radius: 5px;
-    margin-bottom: 20px;
+    width: 100%; /* Responsive width */
+    height: auto; /* Maintain aspect ratio */
 }
 
 h1 {
-    font-size: 60px;
+    font-size: 6vw; /* Responsive font size */
     color: #00f6ff;
 }
 
-/* Buttons */
-.btn, .start-btn, .diff-btn {
+.btn,
+.start-btn,
+.diff-btn {
     cursor: pointer;
     border: 0;
     padding: 10px 20px;
@@ -39,15 +48,17 @@ h1 {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.btn:hover, .start-btn:hover, .diff-btn:hover {
+.btn:hover,
+.start-btn:hover,
+.diff-btn:hover {
     transform: scale(1.1);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
 }
 
 .rules-btn {
     position: absolute;
-    top: 30px;
-    left: 30px;
+    top: 5%;
+    left: 5%;
 }
 
 .rules {
@@ -57,10 +68,11 @@ h1 {
     background: rgba(0, 0, 0, 0.8);
     color: #00f6ff;
     min-height: 100vh;
-    width: 400px;
+    width: 90%; /* Responsive width */
+    max-width: 400px; /* Max width */
     padding: 20px;
     line-height: 1.5;
-    transform: translateX(-400px);
+    transform: translateX(-100%);
     transition: transform 1s ease-in-out;
 }
 
@@ -78,7 +90,7 @@ h1 {
 .difficulty {
     position: absolute;
     display: none;
-    top: 280px;
+    top: 30%;
     background: black;
     color: #00f6ff;
     padding: 20px 50px;
@@ -86,12 +98,12 @@ h1 {
     border-radius: 10px;
     text-align: center;
     animation: pop-in 1s;
-    font-size: 20px;
+    font-size: 5vw; /* Responsive font size */
 }
 
 .start {
     position: absolute;
-    top: 320px;
+    top: 40%;
     background: black;
     color: #00f6ff;
     padding: 20px 50px;
@@ -99,14 +111,16 @@ h1 {
     border-radius: 10px;
     text-align: center;
     animation: pop-in 1s;
-    width: 350px;
-    height: 75px;
+    width: 80%;
+    max-width: 350px; /* Max width */
+    height: auto;
 }
 
-.lose, .win {
+.lose,
+.win {
     display: none;
     position: absolute;
-    top: 250px;
+    top: 40%;
     background: rgba(0, 159, 221, 0.8);
     color: #00f6ff;
     padding: 20px 50px;
@@ -114,6 +128,8 @@ h1 {
     border-radius: 10px;
     text-align: center;
     animation: slide-in 0.8s ease-out;
+    width: 80%;
+    max-width: 350px; /* Max width */
 }
 
 @keyframes pop-in {
@@ -149,45 +165,51 @@ h1 {
         opacity: 1;
     }
 }
+
 .popup-box {
     position: absolute;
-    left: 10px; 
-    bottom: 10px; 
+    left: 10px;
+    bottom: 10px;
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
     padding: 10px;
     border-radius: 5px;
     z-index: 1000;
 }
+
 .message {
     display: none;
     position: absolute;
-    top: 250px;
+    top: 40%;
     background: #39FF14;
     color: black;
     padding: 20px 50px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     text-align: center;
-    font-size: 20px;
+    font-size: 5vw; /* Responsive font size */
     animation: pop-in 1s;
+    width: 80%;
+    max-width: 350px; /* Max width */
 }
+
 .special-message {
     display: none;
-    position: fixed; /* Use fixed to ensure it stays in view */
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(0, 255, 0, 0.8); /* Neon green background */
-    color: #00ff00; /* Neon green text */
-    font-family: 'Handjet', cursive; /* Your desired font */
-    font-size: 24px;
+    background-color: rgba(0, 238, 255, 0.333);
+    color: #000400;
+    font-family: 'Handjet', cursive;
+    font-size: 6vw; /* Responsive font size */
     padding: 20px;
     border-radius: 10px;
     text-align: center;
     z-index: 1000;
-    max-width: 90%; /* Ensure it fits on different screen sizes */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Add some shadow for better visibility */
+    max-width: 90%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    opacity: 0.05;
 }
 
 .special-message.active {
