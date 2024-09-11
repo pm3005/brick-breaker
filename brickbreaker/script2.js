@@ -334,3 +334,25 @@ rulesBtn.addEventListener('click', () => rules.classList.add('show'));
 closeBtn.addEventListener('click', () => rules.classList.remove('show'));
 
 assignSpecialBricks();
+
+
+function handleTouchStart(e) {
+    e.preventDefault(); 
+
+    // Retrieve the touch position
+    const touch = e.touches[0];
+    const touchX = touch.clientX;
+
+    if (touchX < canvas.width / 2) {
+        paddle.dx = -paddle.speed; // Move paddle left
+    } else {
+        paddle.dx = paddle.speed; 
+    }
+}
+
+function handleTouchEnd() {
+    paddle.dx = 0;
+}
+
+canvas.addEventListener('touchstart', handleTouchStart);
+canvas.addEventListener('touchend', handleTouchEnd);
