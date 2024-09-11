@@ -19,7 +19,6 @@ const specialMessages = [
     "HASHTAG"
 ];
 
-
 let currentMessage = ""; // To store the message when a special brick is hit
 
 const ball = {
@@ -42,10 +41,10 @@ function hideDiff() {
 }
 
 function easyMode() {
-    ball.speed = 3.8,
-        ball.dx = 4,
-        ball.dy = -4,
-        hideDiff();
+    ball.speed = 3.8;
+    ball.dx = 4;
+    ball.dy = -4;
+    hideDiff();
 }
 
 // create Paddle Props
@@ -79,6 +78,26 @@ for (let i = 0; i < brickRowCount; i++) {
         const y = i * (brickInfo.h + brickInfo.padding) + brickInfo.offsetY;
         bricks[i][j] = { x, y, ...brickInfo };
     }
+}
+
+function displayUniqueText(index) {
+    // Hide all special message divs first
+    for (let i = 1; i <= 5; i++) {
+        document.getElementById(`brick-${i}-message`).style.display = 'none';
+    }
+
+    // Show the specific message div for the hit special brick
+    const messageDiv = document.getElementById(`brick-${index + 1}-message`);
+    messageDiv.style.display = 'block';
+    messageDiv.style.opacity = '1'; // Make the message visible
+
+    // Hide the message after 4 seconds
+    setTimeout(() => {
+        messageDiv.style.opacity = '0'; // Fade out
+        setTimeout(() => {
+            messageDiv.style.display = 'none'; // Hide after fade out
+        }, 500); // Allow time for fade-out
+    }, 2000); // Display for 4 seconds
 }
 
 function assignSpecialBricks() {
@@ -144,8 +163,13 @@ function drawBricks() {
         });
     });
 }
+
 function areBricksLeft() {
     return bricks.some(column => column.some(brick => brick.visible));
+}
+
+function areSpecialBricksLeft() {
+    return bricks.some(column => column.some(brick => brick.visible && brick.isSpecial));
 }
 
 function drawMessage() {
@@ -206,7 +230,7 @@ function moveBall() {
 
                     if (brick.isSpecial) {
                         score += 1; // Increase score by 5 for special bricks
-                        currentMessage = specialMessages[index % specialMessages.length]; // Display the unique message
+                        displayUniqueText(index);
                     } else {
                         score++;
                     }
@@ -226,29 +250,25 @@ function moveBall() {
     }
 }
 
-
 function pauseBall() {
     ball.speed = 0;
     ball.dx = 0;
     ball.dy = 0;
 }
 
-// pause ball after losing
 function pausePaddle() {
     paddle.speed = 0;
     paddle.dx = 0;
 }
 
-// score++
 function increaseScore() {
-    if (score % (brickRowCount * brickColumnCount) === 0 && !areBricksLeft()) {
+    if (score % (brickRowCount * brickColumnCount) === 0 && !areSpecialBricksLeft()) {
         showAllBricks();
         document.querySelector(".win").style.display = "block";
         return; // Exit function if game is won
     }
 }
 
-// make all bricks appear 
 function showAllBricks() {
     bricks.forEach(column => {
         column.forEach(brick => {
@@ -257,11 +277,8 @@ function showAllBricks() {
     });
 }
 
-//Draw everything
 function draw() {
-    //clear 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     drawBall();
     drawPaddle();
     drawScore();
@@ -269,19 +286,16 @@ function draw() {
     drawMessage(); // Draw message if special brick is hit
 }
 
-// update canvas drawing and animation
 function update() {
     movePaddle();
     moveBall();
-    // draw everything
     draw();
-
     requestAnimationFrame(update);
 }
 
 update();
 
-// key down event
+// Keyboard and touch event handling
 function keyDown(e) {
     if (e.key === 'Right' || e.key === 'ArrowRight') {
         paddle.dx = paddle.speed;
@@ -297,15 +311,27 @@ function keyUp(e) {
     }
 }
 
-//   keyboard event handlers
+function handleTouchStart(e) {
+    const touch = e.touches[0];
+    if (touch.clientX < canvas.width / 2) {
+        paddle.dx = -paddle.speed;
+    } else {
+        paddle.dx = paddle.speed;
+    }
+}
+
+function handleTouchEnd() {
+    paddle.dx = 0;
+}
+
+// Event listeners
 document.addEventListener('keydown', keyDown);
 document.addEventListener('keyup', keyUp);
+canvas.addEventListener('touchstart', handleTouchStart);
+canvas.addEventListener('touchend', handleTouchEnd);
 
-//rules and close event handlers
-rulesBtn.addEventListener('click', () =>
-    rules.classList.add('show'));
-
-closeBtn.addEventListener('click', () =>
-    rules.classList.remove('show'));
+// Rules and close event handlers
+rulesBtn.addEventListener('click', () => rules.classList.add('show'));
+closeBtn.addEventListener('click', () => rules.classList.remove('show'));
 
 assignSpecialBricks();
