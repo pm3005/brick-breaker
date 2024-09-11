@@ -9,7 +9,7 @@ let score = 0;
 const brickRowCount = 6;
 const brickColumnCount = 5;
 const specialBricks = [];
-const specialColors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#A633FF']; // Colors for special bricks
+const specialColors = ['#61f4de', '#65cbe9', '#68b6ef', '#6c8dfa', '#6e78ff']; // Colors for special bricks
 
 const specialMessages = [
     "DEV",
@@ -327,8 +327,7 @@ function handleTouchEnd() {
 // Event listeners
 document.addEventListener('keydown', keyDown);
 document.addEventListener('keyup', keyUp);
-canvas.addEventListener('touchstart', handleTouchStart);
-canvas.addEventListener('touchend', handleTouchEnd);
+
 
 // Rules and close event handlers
 rulesBtn.addEventListener('click', () => rules.classList.add('show'));
