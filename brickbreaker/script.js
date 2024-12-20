@@ -8,8 +8,8 @@ const diffBtn = document.getElementById('difficulty');
 let score = 0;
 const brickRowCount = 9;
 const brickColumnCount = 5;
-const specialBricks = [];
 
+//Create ball props
 const ball = {
     x : canvas.width/2,
     y : canvas.height/2,
@@ -19,16 +19,19 @@ const ball = {
     dy : 0
 }
 
+// Starts the game
 function startGame(){
     const startBtn = document.getElementById('start');
     startBtn.style.display = 'none';
     diffBtn.style.display = 'block';
 }
 
+// Hides Difficulty div
 function hideDiff(){
     diffBtn.style.display = 'none';
 }
 
+// Easy Mode
 function easyMode(){
     ball.speed = 3.8,
     ball.dx = 4,
@@ -36,6 +39,7 @@ function easyMode(){
     hideDiff();
 }
 
+// Medium Mode
 function mediumMode(){
     ball.speed = 4.8,
     ball.dx = 5.2,
@@ -43,6 +47,7 @@ function mediumMode(){
     hideDiff();
 }
 
+// Difficulty Mode
 function hardMode(){
     ball.speed = 5.6,
     ball.dx = 5.9,
@@ -51,7 +56,7 @@ function hardMode(){
 }
 
 
-// create Paddle Props
+// Create Paddle Props
 const paddle = {
     x: canvas.width/2 - 40,
     y: canvas.height - 20,
@@ -61,7 +66,7 @@ const paddle = {
     dx: 0
 }
 
-// create Brick Props
+// Create Brick Props
 const brickInfo = {
     w : 65,
     h : 18,
@@ -71,6 +76,7 @@ const brickInfo = {
     visible : true
 }
 
+//Create Bricks 
 const bricks = [];
 for(let i = 0;i<brickRowCount;i++){
     bricks[i] = [];
@@ -81,17 +87,16 @@ for(let i = 0;i<brickRowCount;i++){
     }
 }
 
-const ballImage = new Image();
-ballImage.src = 'download.png'; 
-ballImage.onload = function() {
-    drawBall();
-};
-
+//Draw ball on canvas
 function drawBall(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height); 
-    ctx.drawImage(ballImage, ball.x - ball.size, ball.y - ball.size, ball.size * 2.5, ball.size * 2.5);
+    ctx.beginPath();
+    ctx.arc(ball.x,ball.y,ball.size,0,Math.PI*2);
+    ctx.fillStyle = '#6B5B95';
+    ctx.fill();
+    ctx.closePath();
 }
 
+//Draw paddle on canvas
 function drawPaddle(){
     ctx.beginPath();
     ctx.rect(paddle.x,paddle.y,paddle.w,paddle.h);
@@ -100,11 +105,13 @@ function drawPaddle(){
     ctx.closePath();
 }
 
+//Draw Score on canvas
 function drawScore(){
     ctx.font = '20px Arial',
     ctx.fillText(`Score : ${score}`,canvas.width-100,30);
 }
 
+//Draw bricks on canvas
 function drawBricks(){
     bricks.forEach(column => {
         column.forEach(brick =>{
@@ -117,7 +124,7 @@ function drawBricks(){
     })
 }
 
-
+//Move Paddle on canvas
 function movePaddle() {
     paddle.x += paddle.dx;
 
@@ -131,26 +138,27 @@ function movePaddle() {
     }
 }
 
+// Move ball on canvas
 function moveBall(){
     ball.x += ball.dx;
     ball.y += ball.dy;
 
-   
+    // Wall collision (right/left)
     if(ball.x + ball.size > canvas.width || ball.x - ball.size < 0){
         ball.dx*= -1;
     }
 
-    
+    // Wall collision (right/left)
     if(ball.y + ball.size > canvas.height || ball.y - ball.size < 0){
         ball.dy*= -1;
     }
 
-    
+    // Paddle collision
     if(ball.x - ball.size > paddle.x && ball.x + ball.size < paddle.x + paddle.w && ball.y + ball.size > paddle.y){
         ball.dy = -ball.speed;
     }
 
-    // brick collision
+    // Brick collision
     bricks.forEach(column =>{
         column.forEach(brick =>{
             if(brick.visible){
@@ -169,7 +177,7 @@ function moveBall(){
         });
     });
 
-    //    bottom wall - Lose
+    // Hit bottom wall - Lose
     if(ball.y + ball.size > canvas.height){
         score = 0;
         showAllBricks();
@@ -178,19 +186,21 @@ function moveBall(){
         document.querySelector(".lose").style.display = "block";
     }
 }
+
+// Pause the ball after losing
 function pauseBall(){
     ball.speed = 0;
     ball.dx = 0;
     ball.dy = 0;
 }
 
-// pause ball after losing
+// Pause the ball after losing
 function pausePaddle(){
     paddle.speed = 0;
     paddle.dx = 0;
 }
 
-// score++
+//Increase Score
 function increaseScore(){
     score++;
 
@@ -200,7 +210,7 @@ function increaseScore(){
     }
 }
 
-// make all bricks appear 
+// Make all bricks appear 
 function showAllBricks(){
     bricks.forEach(column =>{
         column.forEach(brick=>{
@@ -211,7 +221,7 @@ function showAllBricks(){
 
 //Draw everything
 function draw() {
-    //clear 
+    //clear canvas
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
     drawBall();
@@ -220,11 +230,11 @@ function draw() {
     drawBricks();
 }
 
-// update canvas drawing and animation
+//Update canvas drawing and animation
 function update(){
     movePaddle();
     moveBall();
-    // draw everything
+    //Draw everything
     draw();
 
     requestAnimationFrame(update);
@@ -232,7 +242,7 @@ function update(){
 
 update();
 
-// key down event
+//Keydown event
 function keyDown(e){
     if(e.key === 'Right' || e.key === 'ArrowRight') {
         paddle.dx = paddle.speed;
@@ -248,11 +258,11 @@ function keyUp(e){
     }
 
 }
-//   keyboard event handlers
+//Keyboard event handlers
 document.addEventListener('keydown',keyDown);
 document.addEventListener('keyup',keyUp);
 
-//rules and close event handlers
+//Rules and close event handlers
 rulesBtn.addEventListener('click',()=>
 rules.classList.add('show'));
 
